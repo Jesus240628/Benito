@@ -16,6 +16,7 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -47,6 +48,11 @@ public class Main extends javax.swing.JFrame {
         btnOrdenCompra.setText("Orden de Compra");
 
         btnProveedor.setText("Proveedores");
+        btnProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProveedorActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -90,6 +96,12 @@ public class Main extends javax.swing.JFrame {
         ArticuloMain a = new ArticuloMain();
         a.setVisible(true);
     }//GEN-LAST:event_btnArticuloActionPerformed
+
+    private void btnProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedorActionPerformed
+        this.setVisible(false);
+        ProveedorMain p = new ProveedorMain();
+        p.setVisible(true);
+    }//GEN-LAST:event_btnProveedorActionPerformed
 
     /**
      * @param args the command line arguments
