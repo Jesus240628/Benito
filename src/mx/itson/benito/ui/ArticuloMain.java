@@ -5,6 +5,10 @@
  */
 package mx.itson.benito.ui;
 
+import javax.swing.table.DefaultTableModel;
+import mx.itson.benito.entidades.Articulo;
+import mx.itson.benito.persistencia.ArticuloDAO;
+
 /**
  *
  * @author Jesus Javier Quintero Fierro
@@ -123,10 +127,11 @@ public class ArticuloMain extends javax.swing.JFrame {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         ArticuloForm form = new ArticuloForm(this, true, 0);
         form.setVisible(true);
+        cargarTable();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+         
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarActionPerformed
@@ -135,8 +140,16 @@ public class ArticuloMain extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         tblArticulos.removeColumn(tblArticulos.getColumnModel().getColumn(0));
+        cargarTable();
     }//GEN-LAST:event_formWindowOpened
-
+ private void cargarTable(){
+        ArticuloDAO articulos = new ArticuloDAO();
+        DefaultTableModel modelo = (DefaultTableModel) tblArticulos.getModel();
+        modelo.setRowCount(0);
+        for(Articulo a : articulos.obtenerTodos()){
+            modelo.addRow(new Object[] {a.getId(),a.getNombre(),a.getClave(),a.getPrecio(),a.getProveedor()  });
+        }
+    }
     /**
      * @param args the command line arguments
      */
