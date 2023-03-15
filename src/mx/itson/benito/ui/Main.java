@@ -46,6 +46,11 @@ public class Main extends javax.swing.JFrame {
         });
 
         btnOrdenCompra.setText("Orden de Compra");
+        btnOrdenCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOrdenCompraActionPerformed(evt);
+            }
+        });
 
         btnProveedor.setText("Proveedores");
         btnProveedor.addActionListener(new java.awt.event.ActionListener() {
@@ -102,6 +107,12 @@ public class Main extends javax.swing.JFrame {
         ProveedorMain p = new ProveedorMain();
         p.setVisible(true);
     }//GEN-LAST:event_btnProveedorActionPerformed
+
+    private void btnOrdenCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenCompraActionPerformed
+        this.setVisible(false);
+        OrdenCompraMain o = new OrdenCompraMain();
+        o.setVisible(true);
+    }//GEN-LAST:event_btnOrdenCompraActionPerformed
 
     /**
      * @param args the command line arguments
