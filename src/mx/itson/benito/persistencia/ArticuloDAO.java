@@ -30,5 +30,20 @@ public class ArticuloDAO {
         }
     return articulos;
     }
-    
+    public static boolean eliminar(int id){
+    boolean resultado = false;
+        try{
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            Articulo articulo = session.get(Articulo.class, id);
+            if(articulo!=null){
+                session.delete(articulo);
+                session.getTransaction().commit();
+            resultado = true;
+            }
+        }catch(HibernateException ex){
+             System.err.println("Ocurrio un error: " + ex.getMessage());
+        }
+        return resultado;
+    }
 }

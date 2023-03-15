@@ -10,7 +10,12 @@ package mx.itson.benito.enumerador;
  * @author Jesus Javier Quintero Fierro
  */
 public enum Estado {
-    ABIERTO,
-    CERRADO,
-    CANCELADO;
+    ABIERTO(0),
+    CERRADO(1),
+    CANCELADO(2);
+    
+    private int numero;
+    Estado(int numero){
+        this.numero=numero;
+    }
 }
