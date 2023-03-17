@@ -146,7 +146,7 @@ public class OrdenCompraMain extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        int renglon = tblOrdenCompras.getSelectedRow();
+       int renglon = tblOrdenCompras.getSelectedRow();
        if(renglon != -1){
        int idOrdenCompra = Integer.parseInt(tblOrdenCompras.getModel().getValueAt(renglon, 0).toString());
        OrdenCompraForm form = new OrdenCompraForm(this, true,idOrdenCompra);

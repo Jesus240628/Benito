@@ -5,6 +5,11 @@
  */
 package mx.itson.benito.ui;
 
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import mx.itson.benito.entidades.Proveedor;
+import mx.itson.benito.persistencia.ProveedorDAO;
+
 /**
  *
  * @author Jesus Javier Quintero Fierro
@@ -34,6 +39,8 @@ public class ProveedorMain extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         lblOpciones = new javax.swing.JMenu();
         btnAgregar = new javax.swing.JMenuItem();
+        btnEliminar = new javax.swing.JMenuItem();
+        btnEditar = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -50,7 +57,7 @@ public class ProveedorMain extends javax.swing.JFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Id", "Nombre", "Telefono", "Domicilio", "Email", "Contacto"
+                "Id", "Nombre", "Telefono", "Direccion", "Email", "Contacto"
             }
         ));
         jScrollPane1.setViewportView(tblProveedores);
@@ -81,6 +88,22 @@ public class ProveedorMain extends javax.swing.JFrame {
         });
         lblOpciones.add(btnAgregar);
 
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+        lblOpciones.add(btnEliminar);
+
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+        lblOpciones.add(btnEditar);
+
         jMenuBar1.add(lblOpciones);
 
         setJMenuBar(jMenuBar1);
@@ -107,12 +130,55 @@ public class ProveedorMain extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         tblProveedores.removeColumn(tblProveedores.getColumnModel().getColumn(0));
+        cargarTable();
     }//GEN-LAST:event_formWindowOpened
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
+        ProveedorForm form = new ProveedorForm(this, true,0);
+        form.setVisible(true);
+        cargarTable();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        int renglon = tblProveedores.getSelectedRow();
+        if(renglon != -1){
+            int resultado = JOptionPane.showConfirmDialog(this, "¿Esta seguro que quiere eliminar esta orden de compra", "Confirmacion", JOptionPane.YES_NO_OPTION);
+            if(resultado == JOptionPane.YES_OPTION){
+                int idProveedor = Integer.parseInt(tblProveedores.getModel().getValueAt(renglon, 0).toString());        
+                if(ProveedorDAO.eliminar(idProveedor)){
+                    JOptionPane.showMessageDialog(this, "El registro se elimino correctamente", "Registro eliminado", JOptionPane.INFORMATION_MESSAGE);          
+                }else {
+                    JOptionPane.showMessageDialog(this, "Ocurrio un error al intentar eliminar el registro", "Error al eliminar", JOptionPane.ERROR_MESSAGE);  
+                }       
+                cargarTable(); 
+            }            
+        }else{
+            JOptionPane.showMessageDialog(this, "Ocurrió un error, seleccione un proveedor", "Error al seleccionar", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+       int renglon = tblProveedores.getSelectedRow();
+       if(renglon != -1){
+       int idProveedor = Integer.parseInt(tblProveedores.getModel().getValueAt(renglon, 0).toString());
+       ProveedorForm form = new ProveedorForm(this, true,idProveedor);
+       form.setVisible(true);
+       cargarTable(); 
+       }else{
+           JOptionPane.showMessageDialog(this, "Ocurrió un error, seleccione un proveedor", "Error al seleccionar", JOptionPane.ERROR_MESSAGE);
+       }
+    }//GEN-LAST:event_btnEditarActionPerformed
+    
+    private void cargarTable(){
+        ProveedorDAO proveedor = new ProveedorDAO();
+        DefaultTableModel modelo = (DefaultTableModel) tblProveedores.getModel();
+        modelo.setRowCount(0);
+        for(Proveedor p: proveedor.obtenerTodos()){
+            modelo.addRow(new Object[] {p.getId(),p.getNombre(),p.getTelefono(),p.getDireccion(),p.getEmail(),p.getContacto()});
+        }
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -150,6 +216,8 @@ public class ProveedorMain extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem btnAgregar;
+    private javax.swing.JMenuItem btnEditar;
+    private javax.swing.JMenuItem btnEliminar;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
