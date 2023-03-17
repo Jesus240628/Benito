@@ -132,11 +132,33 @@ public class ArticuloMain extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-         
+        int renglon = tblArticulos.getSelectedRow();
+        if(renglon != -1){
+            int resultado = JOptionPane.showConfirmDialog(this, "¿Esta seguro que quiere eliminar este articulo?", "Confirmacion", JOptionPane.YES_NO_OPTION);
+            if(resultado == JOptionPane.YES_OPTION){
+                int idArticulo = Integer.parseInt(tblArticulos.getModel().getValueAt(renglon, 0).toString());        
+                if(ArticuloDAO.eliminar(idArticulo)){
+                    JOptionPane.showMessageDialog(this, "El registro se elimino correctamente", "Registro eliminado", JOptionPane.INFORMATION_MESSAGE);          
+                }else {
+                    JOptionPane.showMessageDialog(this, "Ocurrio un error al intentar eliminar el registro", "Error al eliminar", JOptionPane.ERROR_MESSAGE);  
+                }       
+                cargarTable(); 
+            }            
+        }else{
+            JOptionPane.showMessageDialog(this, "Ocurrió un error, seleccione un articulo", "Error al seleccionar", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarActionPerformed
-     
+       int renglon = tblArticulos.getSelectedRow();
+       if(renglon != -1){
+       int idArticulo = Integer.parseInt(tblArticulos.getModel().getValueAt(renglon, 0).toString());
+       ArticuloForm form = new ArticuloForm(this, true, idArticulo);
+       form.setVisible(true);
+       cargarTable(); 
+       }else{
+           JOptionPane.showMessageDialog(this, "Ocurrió un error, seleccione un articulo", "Error al seleccionar", JOptionPane.ERROR_MESSAGE);
+       }
     }//GEN-LAST:event_EditarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
