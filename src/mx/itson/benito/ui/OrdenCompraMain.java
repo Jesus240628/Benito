@@ -5,9 +5,14 @@
  */
 package mx.itson.benito.ui;
 
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import mx.itson.benito.entidades.OrdenCompra;
+import mx.itson.benito.persistencia.OrdenCompraDAO;
+
 /**
  *
- * @author My Pc
+ * @author Jesus Javier Quintero Fierro
  */
 public class OrdenCompraMain extends javax.swing.JFrame {
 
@@ -37,6 +42,11 @@ public class OrdenCompraMain extends javax.swing.JFrame {
         btnEditar = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         tblOrdenCompras.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -70,6 +80,11 @@ public class OrdenCompraMain extends javax.swing.JFrame {
         jMenu1.setText("Opciones de orden de compra");
 
         btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
         jMenu1.add(btnAgregar);
 
         btnEliminar.setText("Eliminar");
@@ -113,13 +128,54 @@ public class OrdenCompraMain extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+        int renglon = tblOrdenCompras.getSelectedRow();
+        if(renglon != -1){
+            int resultado = JOptionPane.showConfirmDialog(this, "¿Esta seguro que quiere eliminar esta orden de compra", "Confirmacion", JOptionPane.YES_NO_OPTION);
+            if(resultado == JOptionPane.YES_OPTION){
+                int idOrdenCompra = Integer.parseInt(tblOrdenCompras.getModel().getValueAt(renglon, 0).toString());        
+                if(OrdenCompraDAO.eliminar(idOrdenCompra)){
+                    JOptionPane.showMessageDialog(this, "El registro se elimino correctamente", "Registro eliminado", JOptionPane.INFORMATION_MESSAGE);          
+                }else {
+                    JOptionPane.showMessageDialog(this, "Ocurrio un error al intentar eliminar el registro", "Error al eliminar", JOptionPane.ERROR_MESSAGE);  
+                }       
+                cargarTable(); 
+            }            
+        }else{
+            JOptionPane.showMessageDialog(this, "Ocurrió un error, seleccione una orden de compra", "Error al seleccionar", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // TODO add your handling code here:
+        int renglon = tblOrdenCompras.getSelectedRow();
+       if(renglon != -1){
+       int idOrdenCompra = Integer.parseInt(tblOrdenCompras.getModel().getValueAt(renglon, 0).toString());
+       OrdenCompraForm form = new OrdenCompraForm(this, true,idOrdenCompra);
+       form.setVisible(true);
+       cargarTable(); 
+       }else{
+           JOptionPane.showMessageDialog(this, "Ocurrió un error, seleccione una orden de compra", "Error al seleccionar", JOptionPane.ERROR_MESSAGE);
+       }
     }//GEN-LAST:event_btnEditarActionPerformed
 
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        OrdenCompraForm form = new OrdenCompraForm(this, true,0);
+        form.setVisible(true);
+        cargarTable();
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        tblOrdenCompras.removeColumn(tblOrdenCompras.getColumnModel().getColumn(0));
+        cargarTable();
+    }//GEN-LAST:event_formWindowOpened
+    private void cargarTable(){
+        OrdenCompraDAO ordenCompra = new OrdenCompraDAO();
+        DefaultTableModel modelo = (DefaultTableModel) tblOrdenCompras.getModel();
+        modelo.setRowCount(0);
+        for(OrdenCompra o : ordenCompra.obtenerTodos()){
+            modelo.addRow(new Object[] {o.getId(),o.getProveedor().getNombre(),o.getArticulo().getNombre(),o.getFecha(),o.getEstado()});
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
