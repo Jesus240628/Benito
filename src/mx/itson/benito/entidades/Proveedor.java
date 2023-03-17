@@ -15,7 +15,7 @@ public class Proveedor {
     private String telefono;
     private String direccion;
     private String email;
-    private String contancto;
+    private String contacto;
 
     /**
      * @return the id
@@ -88,16 +88,16 @@ public class Proveedor {
     }
 
     /**
-     * @return the contancto
+     * @return the contacto
      */
-    public String getContancto() {
-        return contancto;
+    public String getContacto() {
+        return contacto;
     }
 
     /**
-     * @param contancto the contancto to set
+     * @param contacto the contancto to set
      */
-    public void setContancto(String contancto) {
-        this.contancto = contancto;
+    public void setContacto(String contacto) {
+        this.contacto = contacto;
     }
 }
