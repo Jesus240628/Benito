@@ -71,4 +71,24 @@ public class OrdenCompraDAO {
         }
         return resultado;
     }
+   public static boolean guardar(Date fecha,Articulo articulo,Proveedor proveedor,Estado estado){
+    boolean resultado = false;
+        try{
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+        
+            OrdenCompra ordenCompra = new OrdenCompra();
+            ordenCompra.getFecha();
+            ordenCompra.getArticulo();
+            ordenCompra.getProveedor();
+            ordenCompra.getEstado();
+            session.save(ordenCompra);
+        
+            session.getTransaction().commit();
+        resultado = ordenCompra.getId() !=0;
+        }catch(Exception ex){
+            System.out.println("Ocurrio un error: " + ex.getMessage());
+        }
+    return resultado;
+    }
 }

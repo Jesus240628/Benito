@@ -70,5 +70,24 @@ public class ArticuloDAO {
         }
         return resultado;
     }
-    
+    public static boolean guardar(String nombre,String clave, int precio, Proveedor proveedor){
+    boolean resultado = false;
+        try{
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+        
+            Articulo articulo = new Articulo();
+            articulo.getNombre();
+            articulo.getClave();
+            articulo.getPrecio();
+            articulo.getProveedor();
+            session.save(articulo);
+        
+            session.getTransaction().commit();
+        resultado = proveedor.getId() !=0;
+        }catch(Exception ex){
+            System.out.println("Ocurrio un error: " + ex.getMessage());
+        }
+    return resultado;
+    }
 }

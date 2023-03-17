@@ -48,25 +48,47 @@ public class ProveedorDAO {
         return resultado;
     }
     
-    public static boolean editar(int id, String nombre, String telefono, String direccion,String email,String Contacto){
+ public static boolean editar(int id, String nombre, String telefono, String direccion,String email,String contacto){
     boolean resultado = false;
-    try{
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        Proveedor proveedor = session.get(Proveedor.class, id);
-        if(proveedor != null){
-            proveedor.setNombre(nombre);
-            proveedor.setTelefono(telefono);
-            proveedor.setDireccion(direccion);
-            proveedor.setEmail(email);
-            proveedor.setContacto(Contacto);
-            session.saveOrUpdate(proveedor);
-            session.getTransaction().commit();
+        try{
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            Proveedor proveedor = session.get(Proveedor.class, id);
+            if(proveedor != null){
+                proveedor.setNombre(nombre);
+                proveedor.setTelefono(telefono);
+                proveedor.setDireccion(direccion);
+                proveedor.setEmail(email);
+                proveedor.setContacto(contacto);
+                session.saveOrUpdate(proveedor);
+                session.getTransaction().commit();
             resultado = true;
-            }       
+                }       
         }catch(HibernateException ex){
             System.err.println("Ocurrio un error: " + ex.getMessage());
         }
         return resultado;
+    }
+ public static boolean guardar(String nombre,String telefono,String direccion,String email,String contacto){
+    boolean resultado = false;
+        try{
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+        
+            Proveedor proveedor = new Proveedor();
+            proveedor.getNombre();
+            proveedor.getTelefono();
+            proveedor.getDireccion();
+            proveedor.getDireccion();
+            proveedor.getEmail();
+            proveedor.getContacto();
+            session.save(proveedor);
+        
+            session.getTransaction().commit();
+        resultado = proveedor.getId() !=0;
+        }catch(Exception ex){
+            System.out.println("Ocurrio un error: " + ex.getMessage());
+        }
+    return resultado;
     }
 }

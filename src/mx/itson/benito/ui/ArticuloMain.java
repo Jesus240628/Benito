@@ -5,6 +5,7 @@
  */
 package mx.itson.benito.ui;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import mx.itson.benito.entidades.Articulo;
 import mx.itson.benito.persistencia.ArticuloDAO;
@@ -135,7 +136,7 @@ public class ArticuloMain extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarActionPerformed
-        // TODO add your handling code here:
+     
     }//GEN-LAST:event_EditarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
