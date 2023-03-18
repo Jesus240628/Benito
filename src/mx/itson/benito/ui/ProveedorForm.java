@@ -5,6 +5,12 @@
  */
 package mx.itson.benito.ui;
 
+import javax.swing.JOptionPane;
+import mx.itson.benito.entidades.Proveedor;
+import mx.itson.benito.persistencia.ProveedorDAO;
+import mx.itson.benito.utilerias.HibernateUtil;
+import org.hibernate.Session;
+
 /**
  *
  * @author Jesus Javier Quintero Fierro
@@ -17,6 +23,17 @@ int id;
     public ProveedorForm(java.awt.Frame parent, boolean modal,int id) {
         super(parent, modal);
         initComponents();
+        this.id=id;
+         if(id != 0){
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            Proveedor proveedor = session.get(Proveedor.class, id);
+            txtNombre.setText(proveedor.getNombre());
+            txtTelefono.setText(proveedor.getTelefono());
+            txtDireccion.setText(proveedor.getTelefono());
+            txtEmail.setText(proveedor.getEmail());
+            txtContacto.setText(proveedor.getContacto());              
+         }
     }
 
     /**
@@ -57,6 +74,11 @@ int id;
         jLabel6.setText("Contacto");
 
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -145,6 +167,36 @@ int id;
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    public void resultado(boolean resultado){
+       if(resultado){
+            JOptionPane.showMessageDialog(this, "El registro se guardo correctamente", "Registro guardado", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+            
+        }else{
+            JOptionPane.showMessageDialog(this, "Ocurrió un error al intentar guardar el registro", "Error al guardar", JOptionPane.ERROR_MESSAGE);          
+            dispose();
+        }
+    }
+    
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        try{
+            String nombre = txtNombre.getText();
+            String telefono = txtTelefono.getText();
+            String direccion = txtDireccion.getText();
+            String email = txtEmail.getText();
+            String contacto = txtContacto.getText();
+            if(this.id == 0){
+                boolean resultado = ProveedorDAO.guardar(nombre, telefono, direccion, email, contacto);
+                resultado(resultado);
+            }else{
+                boolean resultado = ProveedorDAO.editar(this.id, nombre, telefono, direccion, email, contacto);
+                resultado(resultado);
+            }
+        }catch(Exception ex){
+            System.err.print("Ocurrio un error:"+ ex );
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**
      * @param args the command line arguments
