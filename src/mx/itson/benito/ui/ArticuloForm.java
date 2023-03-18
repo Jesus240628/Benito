@@ -5,6 +5,13 @@
  */
 package mx.itson.benito.ui;
 
+import javax.swing.JOptionPane;
+import mx.itson.benito.entidades.Articulo;
+import mx.itson.benito.entidades.Proveedor;
+import mx.itson.benito.persistencia.ArticuloDAO;
+import mx.itson.benito.utilerias.HibernateUtil;
+import org.hibernate.Session;
+
 /**
  *
  * @author Jesus Javier Quintero Fierro
@@ -18,6 +25,17 @@ int id;
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
+        this.id=id;
+         if(id != 0){
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            Articulo articulo = session.get(Articulo.class, id);
+            txtNombre.setText(articulo.getNombre());
+            txtClave.setText(articulo.getClave());
+            txtPrecio.setText(Double.toString(articulo.getPrecio()));
+            cmbProveedor.getModel().setSelectedItem(articulo.getProveedor().getNombre());
+            
+         }
     }
 
     /**
@@ -38,7 +56,7 @@ int id;
         lblPrecio = new javax.swing.JLabel();
         txtPrecio = new javax.swing.JTextField();
         lblProveedor = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbProveedor = new javax.swing.JComboBox<>();
         btnGuardar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -54,9 +72,12 @@ int id;
 
         lblProveedor.setText("Proveedor");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -69,25 +90,26 @@ int id;
                         .addComponent(lblTitulo))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnGuardar)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(lblPrecio)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(lblProveedor)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(lblClave)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txtClave))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(lblNombre)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(btnGuardar)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(lblPrecio)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(lblProveedor)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(cmbProveedor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(lblNombre)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lblClave)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtClave, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(0, 46, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -98,7 +120,7 @@ int id;
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNombre)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblClave)
                     .addComponent(txtClave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -109,7 +131,7 @@ int id;
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblProveedor)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(54, 54, 54)
                 .addComponent(btnGuardar)
                 .addContainerGap(57, Short.MAX_VALUE))
@@ -129,11 +151,40 @@ int id;
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    public void resultado(boolean resultado){
+       if(resultado){
+            JOptionPane.showMessageDialog(this, "El registro se guardo correctamente", "Registro guardado", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+            
+        }else{
+            JOptionPane.showMessageDialog(this, "Ocurrió un error al intentar guardar el registro", "Error al guardar", JOptionPane.ERROR_MESSAGE);          
+            dispose();
+        }
+    }
+    
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        try{
+            String nombre = txtNombre.getText();
+            String clave = txtClave.getText();
+            int precio = Integer.parseInt(txtPrecio.getText());
+            Proveedor proveedor = (Proveedor) cmbProveedor.getSelectedItem();
+            if(this.id == 0){
+                boolean resultado = ArticuloDAO.guardar(nombre, clave, precio, proveedor);
+                resultado(resultado);
+            }else{
+                boolean resultado = ArticuloDAO.editar(this.id, nombre, clave, precio, proveedor);
+                resultado(resultado);
+            }
+        }catch(Exception ex){
+            System.err.print("Ocurrio un error:"+ ex );
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -179,7 +230,7 @@ int id;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<Proveedor> cmbProveedor;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblClave;
     private javax.swing.JLabel lblNombre;

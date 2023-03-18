@@ -170,7 +170,7 @@ public class ArticuloMain extends javax.swing.JFrame {
         DefaultTableModel modelo = (DefaultTableModel) tblArticulos.getModel();
         modelo.setRowCount(0);
         for(Articulo a : articulos.obtenerTodos()){
-            modelo.addRow(new Object[] {a.getId(),a.getNombre(),a.getClave(),a.getPrecio(),a.getProveedor()  });
+            modelo.addRow(new Object[] {a.getId(),a.getNombre(),a.getClave(),a.getPrecio(),a.getProveedor().getNombre()  });
         }
     }
     /**

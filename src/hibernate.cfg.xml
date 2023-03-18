@@ -20,9 +20,9 @@
         <property name="hibernate.connection.password">
             2209
         </property>
-        <mapping class="mx.itson."/>
-        <mapping class="mx.itson."/>  
-        <mapping class="mx.itson."/>         
+        <mapping class="mx.itson.benito.entidades.Articulo"/>
+        <mapping class="mx.itson.benito.entidades.OrdenCompra"/>  
+        <mapping class="mx.itson.benito.entidades.Proveedor"/>         
     </session-factory>
 </hibernate-configuration>
 
