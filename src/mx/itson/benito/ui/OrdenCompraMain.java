@@ -7,7 +7,7 @@ package mx.itson.benito.ui;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import mx.itson.benito.entidades.OrdenCompra;
+import mx.itson.benito.entidades.Orden_Compra;
 import mx.itson.benito.persistencia.OrdenCompraDAO;
 
 /**
@@ -171,7 +171,7 @@ public class OrdenCompraMain extends javax.swing.JFrame {
         OrdenCompraDAO ordenCompra = new OrdenCompraDAO();
         DefaultTableModel modelo = (DefaultTableModel) tblOrdenCompras.getModel();
         modelo.setRowCount(0);
-        for(OrdenCompra o : ordenCompra.obtenerTodos()){
+        for(Orden_Compra o : ordenCompra.obtenerTodos()){
             modelo.addRow(new Object[] {o.getId(),o.getProveedor().getNombre(),o.getArticulo().getNombre(),o.getFecha(),o.getEstado()});
         }
     }

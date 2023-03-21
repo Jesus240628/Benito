@@ -5,6 +5,21 @@
  */
 package mx.itson.benito.ui;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import mx.itson.benito.entidades.Articulo;
+import mx.itson.benito.entidades.Orden_Compra;
+import mx.itson.benito.entidades.Proveedor;
+import mx.itson.benito.enumerador.Estado;
+import mx.itson.benito.persistencia.OrdenCompraDAO;
+import mx.itson.benito.utilerias.HibernateUtil;
+import org.hibernate.Session;
+
 /**
  *
  * @author Jesus Javier Quintero Fierro
@@ -18,6 +33,14 @@ int id;
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
+        this.id=id;
+         if(id != 0){
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            Orden_Compra ordenCompra = session.get(Orden_Compra.class, id);
+            cmbProveedor.getModel().setSelectedItem(ordenCompra.getProveedor().getNombre());
+            cmbArticulo.getModel().setSelectedItem(ordenCompra.getArticulo().getNombre());
+         }
     }
 
     /**
@@ -30,34 +53,28 @@ int id;
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel3 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
+        lblTitulo = new javax.swing.JLabel();
+        lblProveedor = new javax.swing.JLabel();
+        cmbProveedor = new javax.swing.JComboBox<>();
+        lblArticulo = new javax.swing.JLabel();
+        cmbArticulo = new javax.swing.JComboBox<>();
+        lblFecha = new javax.swing.JLabel();
         txtFecha = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jComboBox4 = new javax.swing.JComboBox<>();
+        lblEstado = new javax.swing.JLabel();
+        cmbEstado = new javax.swing.JComboBox<>();
         btnGuardar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setText("Formulario de orden de compra");
+        lblTitulo.setText("Formulario de orden de compra");
 
-        jLabel2.setText("Proveedor");
+        lblProveedor.setText("Proveedor");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        lblArticulo.setText("Articulo");
 
-        jLabel3.setText("Articulo");
+        lblFecha.setText("Fecha");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jLabel4.setText("Fecha");
-
-        jLabel5.setText("Estado");
-
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        lblEstado.setText("Estado");
 
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -76,18 +93,18 @@ int id;
                     .addComponent(btnGuardar)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel5)
+                            .addComponent(lblEstado)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jComboBox4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(cmbEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1)
+                            .addComponent(lblTitulo)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel2)
-                                .addComponent(jComboBox1, 0, 180, Short.MAX_VALUE)
-                                .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(lblArticulo)
+                                .addComponent(lblProveedor)
+                                .addComponent(cmbProveedor, 0, 180, Short.MAX_VALUE)
+                                .addComponent(cmbArticulo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel4)
+                            .addComponent(lblFecha)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(txtFecha))))
                 .addContainerGap(43, Short.MAX_VALUE))
@@ -96,23 +113,23 @@ int id;
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(lblTitulo)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel2)
+                .addComponent(lblProveedor)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cmbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
+                .addComponent(lblArticulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cmbArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
+                    .addComponent(lblFecha)
                     .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblEstado)
+                    .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnGuardar)
                 .addContainerGap(138, Short.MAX_VALUE))
@@ -135,8 +152,33 @@ int id;
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void resultado(boolean resultado){
+       if(resultado){
+            JOptionPane.showMessageDialog(this, "El registro se guardo correctamente", "Registro guardado", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+            
+        }else{
+            JOptionPane.showMessageDialog(this, "Ocurrió un error al intentar guardar el registro", "Error al guardar", JOptionPane.ERROR_MESSAGE);          
+            dispose();
+        }
+    }
+    
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
+        try {
+            DateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+            Date fecha = formatoFecha.parse(txtFecha.getText());
+            Proveedor p = (Proveedor) cmbProveedor.getSelectedItem();
+            Articulo a = (Articulo) cmbArticulo.getSelectedItem();
+            if(this.id == 0){
+                boolean resultado = OrdenCompraDAO.guardar(fecha, a, p, Estado.ABIERTO);
+                resultado(resultado);
+            }else{
+                boolean resultado = OrdenCompraDAO.editar(this.id, fecha, a, p, Estado.CERRADO);
+                resultado(resultado);
+            }
+        }catch (ParseException ex) {
+            Logger.getLogger(OrdenCompraForm.class.getName()).log(Level.SEVERE, null, ex);           
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**
@@ -183,15 +225,15 @@ int id;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox4;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JComboBox<Articulo> cmbArticulo;
+    private javax.swing.JComboBox<Estado> cmbEstado;
+    private javax.swing.JComboBox<Proveedor> cmbProveedor;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblArticulo;
+    private javax.swing.JLabel lblEstado;
+    private javax.swing.JLabel lblFecha;
+    private javax.swing.JLabel lblProveedor;
+    private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField txtFecha;
     // End of variables declaration//GEN-END:variables
 }

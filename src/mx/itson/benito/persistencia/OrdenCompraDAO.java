@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.criteria.CriteriaQuery;
 import mx.itson.benito.entidades.Articulo;
-import mx.itson.benito.entidades.OrdenCompra;
+import mx.itson.benito.entidades.Orden_Compra;
 import mx.itson.benito.entidades.Proveedor;
 import mx.itson.benito.enumerador.Estado;
 import mx.itson.benito.utilerias.HibernateUtil;
@@ -22,12 +22,12 @@ import org.hibernate.Session;
  * @author Jesus Javier Quintero Fierro
  */
 public class OrdenCompraDAO {
-    public static List<OrdenCompra> obtenerTodos(){
-        List<OrdenCompra> ordenesCompras = new ArrayList<>();
+    public static List<Orden_Compra> obtenerTodos(){
+        List<Orden_Compra> ordenesCompras = new ArrayList<>();
         try{
             Session session = HibernateUtil.getSessionFactory().openSession();
-            CriteriaQuery<OrdenCompra> criteriaQuery = session.getCriteriaBuilder().createQuery(OrdenCompra.class);
-            criteriaQuery.from(OrdenCompra.class);
+            CriteriaQuery<Orden_Compra> criteriaQuery = session.getCriteriaBuilder().createQuery(Orden_Compra.class);
+            criteriaQuery.from(Orden_Compra.class);
             ordenesCompras = session.createQuery(criteriaQuery).getResultList();
         }catch(Exception ex){
             System.err.println("Ocurrio un error; "+ ex.getMessage());
@@ -40,7 +40,7 @@ public class OrdenCompraDAO {
         try{
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            OrdenCompra ordenCompra = session.get(OrdenCompra.class, id);
+            Orden_Compra ordenCompra = session.get(Orden_Compra.class, id);
             if(ordenCompra!=null){
                 session.delete(ordenCompra);
                 session.getTransaction().commit();
@@ -56,7 +56,7 @@ public class OrdenCompraDAO {
     try{
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        OrdenCompra ordenCompra = session.get(OrdenCompra.class, id);
+        Orden_Compra ordenCompra = session.get(Orden_Compra.class, id);
         if(ordenCompra != null){
             ordenCompra.setFecha(fecha);
             ordenCompra.setArticulo(articulo);
@@ -77,7 +77,7 @@ public class OrdenCompraDAO {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
         
-            OrdenCompra ordenCompra = new OrdenCompra();
+            Orden_Compra ordenCompra = new Orden_Compra();
             ordenCompra.getFecha();
             ordenCompra.getArticulo();
             ordenCompra.getProveedor();

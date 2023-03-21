@@ -6,16 +6,33 @@
 package mx.itson.benito.entidades;
 
 import java.util.Date;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import mx.itson.benito.enumerador.Estado;
 
 /**
  *
  * @author Jesus Javier Quintero Fierro
  */
-public class OrdenCompra {
+@Entity
+public class Orden_Compra {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Temporal(TemporalType.DATE)
     private Date fecha;
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name="idArticulo")
     private Articulo articulo;
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name="idProveedor")
     private Proveedor proveedor;
     private Estado estado;
 

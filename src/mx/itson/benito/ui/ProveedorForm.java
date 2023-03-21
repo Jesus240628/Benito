@@ -23,6 +23,7 @@ int id;
     public ProveedorForm(java.awt.Frame parent, boolean modal,int id) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
         this.id=id;
          if(id != 0){
             Session session = HibernateUtil.getSessionFactory().openSession();

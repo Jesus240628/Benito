@@ -5,15 +5,28 @@
  */
 package mx.itson.benito.entidades;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
 /**
  * 
  * @author Jesus Javier Quintero Fierro
  */
+@Entity
 public class Articulo {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nombre;
     private String clave;
     private double precio;
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name="idProveedor")
     private Proveedor proveedor;
 
     /**
@@ -85,5 +98,8 @@ public class Articulo {
     public void setProveedor(Proveedor proveedor) {
         this.proveedor = proveedor;
     }
-    
+    @Override
+    public String toString(){
+        return this.nombre;
+    }
 }
