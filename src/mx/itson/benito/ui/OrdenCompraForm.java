@@ -176,13 +176,19 @@ int id;
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Carga un objeto proveedor y los añade a un comboBox
+     */
     public void cargarProveedores(){
         List<Proveedor> proveedores = ProveedorDAO.obtenerTodos();
         for(Proveedor p : proveedores){
             cmbProveedor.addItem(p);
         }
     }
+    
+    /**
+     * Carga un objeto articulos y los añade a un comboBox
+     */
     public void cargarArticulos(){
         List<Articulo> articulos = ArticuloDAO.obtenerTodos();
         for(Articulo a : articulos){
@@ -190,6 +196,9 @@ int id;
         }
     }
     
+    /**
+     * Carga un objeto estado y los añade a un comboBox
+     */
     public void cargarEstados(){
     Estado[] estados = Estado.values();
     for(Estado e : estados){
@@ -197,6 +206,10 @@ int id;
         }
     }
     
+    /**
+     * Muestra si el metodo se ejecuto con exito o no.
+     * @param resultado Indica si el metodo resultado true o false.
+     */
     public void resultado(boolean resultado){
        if(resultado){
             JOptionPane.showMessageDialog(this, "El registro se guardo correctamente", "Registro guardado", JOptionPane.INFORMATION_MESSAGE);
@@ -214,11 +227,12 @@ int id;
             Date fecha = formatoFecha.parse(txtFecha.getText());
             Proveedor p = (Proveedor) cmbProveedor.getSelectedItem();
             Articulo a = (Articulo) cmbArticulo.getSelectedItem();
+            int cantidad = Integer.parseInt(txtCantidad.getText());
             if(this.id == 0){
-                boolean resultado = OrdenCompraDAO.guardar(fecha, a, p, Estado.ABIERTO);
+                boolean resultado = OrdenCompraDAO.guardar(fecha, a, p, Estado.ABIERTO,cantidad);
                 resultado(resultado);
             }else{
-                boolean resultado = OrdenCompraDAO.editar(this.id, fecha, a, p, Estado.CERRADO);
+                boolean resultado = OrdenCompraDAO.editar(this.id, fecha, a, p, Estado.CERRADO,cantidad);
                 resultado(resultado);
             }
         }catch (ParseException ex) {

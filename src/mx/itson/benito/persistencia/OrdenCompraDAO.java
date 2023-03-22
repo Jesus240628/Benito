@@ -68,9 +68,10 @@ public class OrdenCompraDAO {
      * @param articulo Articulo de la orden de compra
      * @param proveedor Proveedor de la orden de compra
      * @param estado Estado de la orden de compra
+     * @param cantidad Cantidad de articulos pedidos en la orden de compra
      * @return Nos indica si el registro se guardo correctamente o no
      */
-   public static boolean editar(int id, Date fecha,Articulo articulo, Proveedor proveedor,Estado estado){
+   public static boolean editar(int id, Date fecha,Articulo articulo, Proveedor proveedor,Estado estado,int cantidad){
     boolean resultado = false;
     try{
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -81,6 +82,7 @@ public class OrdenCompraDAO {
             ordenCompra.setArticulo(articulo);
             ordenCompra.setProveedor(proveedor);
             ordenCompra.setEstado(estado);
+            ordenCompra.setCantidad(cantidad);
             session.saveOrUpdate(ordenCompra);
             session.getTransaction().commit();
             resultado = true;
@@ -97,9 +99,10 @@ public class OrdenCompraDAO {
      * @param articulo Articulo de la orden de compra
      * @param proveedor Proveedor de la orden de compra
      * @param estado Estado de la orden de compra
+     * @param cantidad Cantidad de articulos pedidos en la orden de compra
      * @return Nos indica si el registro se guardo correctamente o no
      */
-   public static boolean guardar(Date fecha,Articulo articulo,Proveedor proveedor,Estado estado){
+   public static boolean guardar(Date fecha,Articulo articulo,Proveedor proveedor,Estado estado,int cantidad){
     boolean resultado = false;
         try{
             Session session = HibernateUtil.getSessionFactory().openSession();
@@ -110,6 +113,7 @@ public class OrdenCompraDAO {
             ordenCompra.getArticulo();
             ordenCompra.getProveedor();
             ordenCompra.getEstado();
+            ordenCompra.getCantidad();
             session.save(ordenCompra);
         
             session.getTransaction().commit();

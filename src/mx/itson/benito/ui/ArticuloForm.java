@@ -15,7 +15,7 @@ import mx.itson.benito.utilerias.HibernateUtil;
 import org.hibernate.Session;
 
 /**
- *
+ * 
  * @author Jesus Javier Quintero Fierro
  */
 public class ArticuloForm extends javax.swing.JDialog {
@@ -159,7 +159,9 @@ int id;
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+    /**
+     * Carga un objeto proveedor y los añade a un comboBox
+     */
     public void cargarProveedores(){
         List<Proveedor> proveedores = ProveedorDAO.obtenerTodos();
         for(Proveedor p : proveedores){
@@ -167,6 +169,10 @@ int id;
         }
     }
     
+    /**
+     * Muestra si el metodo se ejecuto con exito o no.
+     * @param resultado Indica si el metodo resultado true o false.
+     */
     public void resultado(boolean resultado){
        if(resultado){
             JOptionPane.showMessageDialog(this, "El registro se guardo correctamente", "Registro guardado", JOptionPane.INFORMATION_MESSAGE);

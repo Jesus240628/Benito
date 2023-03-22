@@ -165,6 +165,10 @@ public class ArticuloMain extends javax.swing.JFrame {
         tblArticulos.removeColumn(tblArticulos.getColumnModel().getColumn(0));
         cargarTable();
     }//GEN-LAST:event_formWindowOpened
+    
+    /**
+     * Carga la base de datos en la tabla articulos
+     */
     private void cargarTable(){
         ArticuloDAO articulos = new ArticuloDAO();
         DefaultTableModel modelo = (DefaultTableModel) tblArticulos.getModel();

@@ -168,7 +168,11 @@ int id;
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /**
+     * Muestra si el metodo se ejecuto con exito o no.
+     * @param resultado Indica si el metodo resultado true o false.
+     */
     public void resultado(boolean resultado){
        if(resultado){
             JOptionPane.showMessageDialog(this, "El registro se guardo correctamente", "Registro guardado", JOptionPane.INFORMATION_MESSAGE);

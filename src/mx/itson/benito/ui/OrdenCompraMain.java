@@ -193,6 +193,10 @@ public class OrdenCompraMain extends javax.swing.JFrame {
         calcularSubtotal();
         calcularTotal();
     }//GEN-LAST:event_formWindowOpened
+    
+    /**
+     * Carga la base de datos en la tabla orden de compra
+     */
     private void cargarTable(){
         DateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
         OrdenCompraDAO ordenCompra = new OrdenCompraDAO();
@@ -202,6 +206,10 @@ public class OrdenCompraMain extends javax.swing.JFrame {
             modelo.addRow(new Object[] {o.getId(),o.getProveedor().getNombre(),o.getArticulo().getNombre(),formatoFecha.format(o.getFecha()),o.getEstado(),o.getCantidad(),o.getArticulo().getPrecio(),o.getCantidad()*o.getArticulo().getPrecio()});
         }
     }
+    
+    /**
+     * Calcula el subtotal del total de articulos ordenados en la orden de compra
+     */
     private void calcularSubtotal() {
     DefaultTableModel modelo = (DefaultTableModel) tblOrdenCompras.getModel();
     double subtotal = 0;
@@ -210,6 +218,10 @@ public class OrdenCompraMain extends javax.swing.JFrame {
         }   
         lblSubtotal.setText("Subtotal: "+ subtotal);
     }
+    
+    /**
+     * Calcula el total de la orden de compra 
+     */
     private void calcularTotal() {
     DefaultTableModel modelo = (DefaultTableModel) tblOrdenCompras.getModel();
     double total = 0;

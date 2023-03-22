@@ -168,7 +168,9 @@ public class ProveedorMain extends javax.swing.JFrame {
            JOptionPane.showMessageDialog(this, "Ocurrió un error, seleccione un proveedor", "Error al seleccionar", JOptionPane.ERROR_MESSAGE);
        }
     }//GEN-LAST:event_btnEditarActionPerformed
-    
+    /**
+     * Carga la base de datos en la tabla orden de compra
+     */
     private void cargarTable(){
         ProveedorDAO proveedor = new ProveedorDAO();
         DefaultTableModel modelo = (DefaultTableModel) tblProveedores.getModel();
