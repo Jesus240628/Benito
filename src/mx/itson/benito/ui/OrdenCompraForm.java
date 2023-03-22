@@ -9,6 +9,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -16,7 +17,9 @@ import mx.itson.benito.entidades.Articulo;
 import mx.itson.benito.entidades.Orden_Compra;
 import mx.itson.benito.entidades.Proveedor;
 import mx.itson.benito.enumerador.Estado;
+import mx.itson.benito.persistencia.ArticuloDAO;
 import mx.itson.benito.persistencia.OrdenCompraDAO;
+import mx.itson.benito.persistencia.ProveedorDAO;
 import mx.itson.benito.utilerias.HibernateUtil;
 import org.hibernate.Session;
 
@@ -32,6 +35,9 @@ int id;
     public OrdenCompraForm(java.awt.Frame parent, boolean modal,int id) {
         super(parent, modal);
         initComponents();
+        cargarProveedores();
+        cargarArticulos();
+        cargarEstados();
         this.setLocationRelativeTo(null);
         this.id=id;
          if(id != 0){
@@ -40,6 +46,7 @@ int id;
             Orden_Compra ordenCompra = session.get(Orden_Compra.class, id);
             cmbProveedor.getModel().setSelectedItem(ordenCompra.getProveedor().getNombre());
             cmbArticulo.getModel().setSelectedItem(ordenCompra.getArticulo().getProveedor().getNombre());
+            cmbEstado.getModel().setSelectedItem(ordenCompra.getEstado());
             DateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
             txtFecha.setText(formatoFecha.format(ordenCompra.getFecha()));
             txtCantidad.setText(Integer.toString(ordenCompra.getCantidad()));
@@ -129,8 +136,8 @@ int id;
                 .addGap(18, 18, 18)
                 .addComponent(lblProveedor)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cmbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cmbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblArticulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cmbArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -170,6 +177,26 @@ int id;
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void cargarProveedores(){
+        List<Proveedor> proveedores = ProveedorDAO.obtenerTodos();
+        for(Proveedor p : proveedores){
+            cmbProveedor.addItem(p);
+        }
+    }
+    public void cargarArticulos(){
+        List<Articulo> articulos = ArticuloDAO.obtenerTodos();
+        for(Articulo a : articulos){
+            cmbArticulo.addItem(a);
+        }
+    }
+    
+    public void cargarEstados(){
+    Estado[] estados = Estado.values();
+    for(Estado e : estados){
+        cmbEstado.addItem(e);
+        }
+    }
+    
     public void resultado(boolean resultado){
        if(resultado){
             JOptionPane.showMessageDialog(this, "El registro se guardo correctamente", "Registro guardado", JOptionPane.INFORMATION_MESSAGE);
