@@ -14,7 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 /**
- * 
+ * Clase Articulo con tributos de un articulo.
  * @author Jesus Javier Quintero Fierro
  */
 @Entity

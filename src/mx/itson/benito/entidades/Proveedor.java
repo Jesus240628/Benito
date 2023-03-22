@@ -11,7 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
- *
+ * Clase Proveedor con tributos de un proveedor.
  * @author Jesus Javier Quintero Fierro
  */
 @Entity

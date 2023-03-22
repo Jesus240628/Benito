@@ -18,7 +18,7 @@ import javax.persistence.TemporalType;
 import mx.itson.benito.enumerador.Estado;
 
 /**
- *
+ * Clase Orden_Compra con tributos de una Orden de compra.
  * @author Jesus Javier Quintero Fierro
  */
 @Entity
