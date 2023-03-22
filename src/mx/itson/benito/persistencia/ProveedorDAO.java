@@ -18,6 +18,10 @@ import org.hibernate.Session;
  * @author Jesus Javier Quintero Fierro
  */
 public class ProveedorDAO {
+ /**
+ * Lista de proveedores con sus atributos.
+ * @return Retorna una lista de proveedores.
+ */
  public static List<Proveedor> obtenerTodos(){
         List<Proveedor> proveedores = new ArrayList<>();
         try{
@@ -31,6 +35,11 @@ public class ProveedorDAO {
     return proveedores;
     }
  
+ /**
+ * Elimina un registro de una orden de compra en la base de datos
+ * @param id Id del proveedor
+ * @return Nos indica si el registro se elimino correctamente o no.
+ */
  public static boolean eliminar(int id){
     boolean resultado = false;
         try{
@@ -47,7 +56,17 @@ public class ProveedorDAO {
         }
         return resultado;
     }
-    
+ 
+ /**
+ * Edita un registro de proveedor en la base de datos
+ * @param id Id del proveedor
+ * @param nombre Nombre del proveedor
+ * @param telefono Telefono del proveedor
+ * @param direccion Direccion del proveedor
+ * @param email Email del proveedor
+ * @param contacto Contacto del proveedor
+ * @return Nos indica si el registro se guardo correctamente o no
+ */
  public static boolean editar(int id, String nombre, String telefono, String direccion,String email,String contacto){
     boolean resultado = false;
         try{
@@ -69,6 +88,16 @@ public class ProveedorDAO {
         }
         return resultado;
     }
+ 
+ /**
+ * Guarda un registro de proveedor en la base de datos
+ * @param nombre Nombre del proveedor
+ * @param telefono Telefono del proveedor
+ * @param direccion Direccion del proveedor
+ * @param email Email del proveedor
+ * @param contacto Contacto del proveedor
+ * @return Nos indica si el registro se guardo correctamente o no
+ */
  public static boolean guardar(String nombre,String telefono,String direccion,String email,String contacto){
     boolean resultado = false;
         try{

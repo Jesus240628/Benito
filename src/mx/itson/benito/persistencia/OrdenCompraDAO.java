@@ -18,10 +18,14 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 /**
- *
+ * Contiene la persistencia data access object del objeto orden de compra
  * @author Jesus Javier Quintero Fierro
  */
 public class OrdenCompraDAO {
+    /**
+     * Lista de ordenes de compra con sus atributos.
+     * @return Retorna una lista de ordenes de compra.
+     */
     public static List<Orden_Compra> obtenerTodos(){
         List<Orden_Compra> ordenesCompras = new ArrayList<>();
         try{
@@ -35,6 +39,11 @@ public class OrdenCompraDAO {
     return ordenesCompras;
     }
     
+   /**
+     * Elimina un registro de una orden de compra en la base de datos
+     * @param id Id de la orden de compra
+     * @return Nos indica si el registro se elimino correctamente o no.
+     */
    public static boolean eliminar(int id){
        boolean resultado = false;
         try{
@@ -51,6 +60,16 @@ public class OrdenCompraDAO {
         }
         return resultado;
     }
+   
+   /**
+     * Edita un registro de una orden de compra en la base de datos
+     * @param id Id de la orden de compra
+     * @param fecha Fecha de la orden de compra
+     * @param articulo Articulo de la orden de compra
+     * @param proveedor Proveedor de la orden de compra
+     * @param estado Estado de la orden de compra
+     * @return Nos indica si el registro se guardo correctamente o no
+     */
    public static boolean editar(int id, Date fecha,Articulo articulo, Proveedor proveedor,Estado estado){
     boolean resultado = false;
     try{
@@ -71,6 +90,15 @@ public class OrdenCompraDAO {
         }
         return resultado;
     }
+   
+   /**
+     * Guarda un registro de una orden de compra en la base de datos
+     * @param fecha Fecha de la orden de compra
+     * @param articulo Articulo de la orden de compra
+     * @param proveedor Proveedor de la orden de compra
+     * @param estado Estado de la orden de compra
+     * @return Nos indica si el registro se guardo correctamente o no
+     */
    public static boolean guardar(Date fecha,Articulo articulo,Proveedor proveedor,Estado estado){
     boolean resultado = false;
         try{

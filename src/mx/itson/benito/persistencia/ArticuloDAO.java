@@ -15,11 +15,14 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 /**
- *
+ * Contiene la persistencia data access object del objeto articulo
  * @author Jesus Javier Quintero Fierro
  */
 public class ArticuloDAO {
-    
+    /**
+     * Lista de articulos con sus atributos.
+     * @return Retorna una lista de articulos.
+     */
     public static List<Articulo> obtenerTodos(){
         List<Articulo> articulos = new ArrayList<>();
         try{
@@ -33,6 +36,11 @@ public class ArticuloDAO {
     return articulos;
     }
     
+     /**
+     * Elimina un registro de un articulo en la base de datos
+     * @param id Id de articulo
+     * @return Nos indica si el registro se elimino correctamente o no.
+     */
     public static boolean eliminar(int id){
     boolean resultado = false;
         try{
@@ -50,6 +58,15 @@ public class ArticuloDAO {
         return resultado;
     }
     
+    /**
+     * Edita un registro de un articulo en la base de datos
+     * @param id Id del articulo
+     * @param nombre Nombre del articulo
+     * @param clave Clave del articulo
+     * @param precio Precio del articulo
+     * @param proveedor Proveedor del articulo
+     * @return Nos indica si el registro se guardo correctamente o no
+     */
     public static boolean editar(int id, String nombre, String clave, Double precio, Proveedor proveedor){
     boolean resultado = false;
     try{
@@ -70,6 +87,15 @@ public class ArticuloDAO {
         }
         return resultado;
     }
+    
+    /**
+     * Guarda un registro de un articulo en la base de datos
+     * @param nombre Nombre del articulo
+     * @param clave Clave del articulo
+     * @param precio Precio del articulo
+     * @param proveedor Proveedor del articulo
+     * @return Nos indica si el registro se guardo correctamente o no
+     */
     public static boolean guardar(String nombre,String clave, Double precio, Proveedor proveedor){
     boolean resultado = false;
         try{
