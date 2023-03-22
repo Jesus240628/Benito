@@ -6,7 +6,7 @@
 package mx.itson.benito.enumerador;
 
 /**
- *
+ * Enumerador Estado con diferentes Estados 
  * @author Jesus Javier Quintero Fierro
  */
 public enum Estado {
