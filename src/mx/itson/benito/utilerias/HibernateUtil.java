@@ -11,7 +11,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
 /**
- *
+ * Construye una sesion factory en la cual registra un registro
  * @author Jesus Javier Quintero Fierro
  */
 public class HibernateUtil {
