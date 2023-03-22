@@ -5,10 +5,12 @@
  */
 package mx.itson.benito.ui;
 
+import java.util.List;
 import javax.swing.JOptionPane;
 import mx.itson.benito.entidades.Articulo;
 import mx.itson.benito.entidades.Proveedor;
 import mx.itson.benito.persistencia.ArticuloDAO;
+import mx.itson.benito.persistencia.ProveedorDAO;
 import mx.itson.benito.utilerias.HibernateUtil;
 import org.hibernate.Session;
 
@@ -24,6 +26,7 @@ int id;
     public ArticuloForm(java.awt.Frame parent, boolean modal,int id) {
         super(parent, modal);
         initComponents();
+        cargarProveedores();
         this.setLocationRelativeTo(null);
         this.id=id;
          if(id != 0){
@@ -156,7 +159,14 @@ int id;
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    public void cargarProveedores(){
+        List<Proveedor> proveedores = ProveedorDAO.obtenerTodos();
+        for(Proveedor p : proveedores){
+            cmbProveedor.addItem(p);
+        }
+    }
+    
     public void resultado(boolean resultado){
        if(resultado){
             JOptionPane.showMessageDialog(this, "El registro se guardo correctamente", "Registro guardado", JOptionPane.INFORMATION_MESSAGE);
@@ -172,7 +182,7 @@ int id;
         try{
             String nombre = txtNombre.getText();
             String clave = txtClave.getText();
-            int precio = Integer.parseInt(txtPrecio.getText());
+            Double precio = Double.parseDouble(txtPrecio.getText());
             Proveedor proveedor = (Proveedor) cmbProveedor.getSelectedItem();
             if(this.id == 0){
                 boolean resultado = ArticuloDAO.guardar(nombre, clave, precio, proveedor);

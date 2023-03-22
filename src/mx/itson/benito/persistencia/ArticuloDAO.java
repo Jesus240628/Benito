@@ -50,7 +50,7 @@ public class ArticuloDAO {
         return resultado;
     }
     
-    public static boolean editar(int id, String nombre, String clave, int precio, Proveedor proveedor){
+    public static boolean editar(int id, String nombre, String clave, Double precio, Proveedor proveedor){
     boolean resultado = false;
     try{
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -70,7 +70,7 @@ public class ArticuloDAO {
         }
         return resultado;
     }
-    public static boolean guardar(String nombre,String clave, int precio, Proveedor proveedor){
+    public static boolean guardar(String nombre,String clave, Double precio, Proveedor proveedor){
     boolean resultado = false;
         try{
             Session session = HibernateUtil.getSessionFactory().openSession();

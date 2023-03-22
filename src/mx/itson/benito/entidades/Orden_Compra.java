@@ -35,7 +35,22 @@ public class Orden_Compra {
     @JoinColumn(name="idProveedor")
     private Proveedor proveedor;
     private Estado estado;
+    private int cantidad;
+    
+    /**
+     * @return the cantidad
+     */
+    public int getCantidad() {
+        return cantidad;
+    }
 
+    /**
+     * @param cantidad the cantidad to set
+     */
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+    
     /**
      * @return the id
      */

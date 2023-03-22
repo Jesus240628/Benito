@@ -5,6 +5,8 @@
  */
 package mx.itson.benito.ui;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import mx.itson.benito.entidades.Orden_Compra;
@@ -35,6 +37,8 @@ public class OrdenCompraMain extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblOrdenCompras = new javax.swing.JTable();
+        lblSubtotal = new javax.swing.JLabel();
+        lblTotal = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         btnAgregar = new javax.swing.JMenuItem();
@@ -50,13 +54,13 @@ public class OrdenCompraMain extends javax.swing.JFrame {
 
         tblOrdenCompras.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Id", "proveedor", "Articulo", "Fecha", "Estado"
+                "Id", "proveedor", "Articulo", "Fecha", "Estado", "Cantidad", "Precio u/c", "Precio total"
             }
         ));
         jScrollPane1.setViewportView(tblOrdenCompras);
@@ -67,8 +71,8 @@ public class OrdenCompraMain extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 632, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -76,6 +80,10 @@ public class OrdenCompraMain extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
+
+        lblSubtotal.setText("Subtotal:");
+
+        lblTotal.setText("Total:");
 
         jMenu1.setText("Opciones de orden de compra");
 
@@ -113,15 +121,25 @@ public class OrdenCompraMain extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(lblSubtotal)
+                        .addGap(197, 197, 197)
+                        .addComponent(lblTotal))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSubtotal)
+                    .addComponent(lblTotal))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         pack();
@@ -138,7 +156,9 @@ public class OrdenCompraMain extends javax.swing.JFrame {
                 }else {
                     JOptionPane.showMessageDialog(this, "Ocurrio un error al intentar eliminar el registro", "Error al eliminar", JOptionPane.ERROR_MESSAGE);  
                 }       
-                cargarTable(); 
+                cargarTable();
+                calcularSubtotal();
+                calcularTotal();
             }            
         }else{
             JOptionPane.showMessageDialog(this, "Ocurrió un error, seleccione una orden de compra", "Error al seleccionar", JOptionPane.ERROR_MESSAGE);
@@ -151,7 +171,9 @@ public class OrdenCompraMain extends javax.swing.JFrame {
        int idOrdenCompra = Integer.parseInt(tblOrdenCompras.getModel().getValueAt(renglon, 0).toString());
        OrdenCompraForm form = new OrdenCompraForm(this, true,idOrdenCompra);
        form.setVisible(true);
-       cargarTable(); 
+       cargarTable();
+       calcularSubtotal();
+       calcularTotal();
        }else{
            JOptionPane.showMessageDialog(this, "Ocurrió un error, seleccione una orden de compra", "Error al seleccionar", JOptionPane.ERROR_MESSAGE);
        }
@@ -161,21 +183,41 @@ public class OrdenCompraMain extends javax.swing.JFrame {
         OrdenCompraForm form = new OrdenCompraForm(this, true,0);
         form.setVisible(true);
         cargarTable();
+        calcularSubtotal();
+        calcularTotal();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         tblOrdenCompras.removeColumn(tblOrdenCompras.getColumnModel().getColumn(0));
         cargarTable();
+        calcularSubtotal();
+        calcularTotal();
     }//GEN-LAST:event_formWindowOpened
     private void cargarTable(){
+        DateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
         OrdenCompraDAO ordenCompra = new OrdenCompraDAO();
         DefaultTableModel modelo = (DefaultTableModel) tblOrdenCompras.getModel();
         modelo.setRowCount(0);
         for(Orden_Compra o : ordenCompra.obtenerTodos()){
-            modelo.addRow(new Object[] {o.getId(),o.getProveedor().getNombre(),o.getArticulo().getNombre(),o.getFecha(),o.getEstado()});
+            modelo.addRow(new Object[] {o.getId(),o.getProveedor().getNombre(),o.getArticulo().getNombre(),formatoFecha.format(o.getFecha()),o.getEstado(),o.getCantidad(),o.getArticulo().getPrecio(),o.getCantidad()*o.getArticulo().getPrecio()});
         }
     }
-    
+    private void calcularSubtotal() {
+    DefaultTableModel modelo = (DefaultTableModel) tblOrdenCompras.getModel();
+    double subtotal = 0;
+        for(int i = 0; i < modelo.getRowCount(); i++) {
+           subtotal += (double) modelo.getValueAt(i, 7);
+        }   
+        lblSubtotal.setText("Subtotal: "+ subtotal);
+    }
+    private void calcularTotal() {
+    DefaultTableModel modelo = (DefaultTableModel) tblOrdenCompras.getModel();
+    double total = 0;
+        for(int i = 0; i < modelo.getRowCount(); i++) {
+          total += ((double) modelo.getValueAt(i, 7)+(double) modelo.getValueAt(i, 7)*.16);
+        }   
+        lblTotal.setText("Total: "+ total);
+    }
     /**
      * @param args the command line arguments
      */
@@ -219,6 +261,8 @@ public class OrdenCompraMain extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblSubtotal;
+    private javax.swing.JLabel lblTotal;
     private javax.swing.JTable tblOrdenCompras;
     // End of variables declaration//GEN-END:variables
 }
